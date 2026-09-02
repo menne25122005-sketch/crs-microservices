@@ -6,8 +6,12 @@ interface CourseListProps {
   state: LoadState;
   errorMessage: string;
   onRetry: () => void;
+
   onEdit?: (course: Course) => void;
   onDelete?: (course: Course) => void;
+
+  onRegister?: (course: Course) => void;
+  registeringId?: number | null;
 }
 
 export default function CourseList({
@@ -17,6 +21,8 @@ export default function CourseList({
   onRetry,
   onEdit,
   onDelete,
+  onRegister,
+  registeringId,
 }: CourseListProps) {
   if (state === 'loading') {
     return <p>Dang tai danh sach mon hoc...</p>;
@@ -35,12 +41,23 @@ export default function CourseList({
     return <p>Khong tim thay mon hoc nao phu hop.</p>;
   }
 
-  const showActions = !!onEdit || !!onDelete;
+  const showActions =
+    !!onEdit || !!onDelete || !!onRegister;
 
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table
+      style={{
+        width: '100%',
+        borderCollapse: 'collapse',
+      }}
+    >
       <thead>
-        <tr style={{ textAlign: 'left', borderBottom: '2px solid #333' }}>
+        <tr
+          style={{
+            textAlign: 'left',
+            borderBottom: '2px solid #333',
+          }}
+        >
           <th>Ten mon hoc</th>
           <th>So tin chi</th>
           <th>So cho con lai</th>
@@ -53,9 +70,12 @@ export default function CourseList({
         {courses.map((course) => (
           <tr
             key={course.id}
-            style={{ borderBottom: '1px solid #eee' }}
+            style={{
+              borderBottom: '1px solid #eee',
+            }}
           >
             <td>{course.tenMonHoc}</td>
+
             <td>{course.soTinChi}</td>
 
             <td
@@ -72,7 +92,9 @@ export default function CourseList({
             {showActions && (
               <td>
                 {onEdit && (
-                  <button onClick={() => onEdit(course)}>
+                  <button
+                    onClick={() => onEdit(course)}
+                  >
                     Sua
                   </button>
                 )}
@@ -86,6 +108,27 @@ export default function CourseList({
                     }}
                   >
                     Xoa
+                  </button>
+                )}
+
+                {onRegister && (
+                  <button
+                    onClick={() =>
+                      onRegister(course)
+                    }
+                    disabled={
+                      course.soChoConLai === 0 ||
+                      registeringId === course.id
+                    }
+                    style={{
+                      marginLeft: 8,
+                    }}
+                  >
+                    {registeringId === course.id
+                      ? 'Dang dang ky...'
+                      : course.soChoConLai === 0
+                        ? 'Het cho'
+                        : 'Dang ky'}
                   </button>
                 )}
               </td>

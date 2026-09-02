@@ -40,11 +40,17 @@ export default function Navbar() {
         )}
 
       {isAuthenticated &&
-        user?.role === 'STUDENT' && (
-          <Link to="/register-course">
-            Dang ky hoc phan
-          </Link>
-        )}
+  user?.role === 'STUDENT' && (
+    <>
+      <Link to="/register-course">
+        Dang ky hoc phan
+      </Link>
+
+      <Link to="/my-registrations">
+        Hoc phan cua toi
+      </Link>
+    </>
+  )}
 
       <div style={{ marginLeft: 'auto' }}>
         {isAuthenticated ? (

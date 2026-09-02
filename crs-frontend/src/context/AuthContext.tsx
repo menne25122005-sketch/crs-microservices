@@ -9,6 +9,7 @@ import {
 import type { LoginResponse } from '../types/auth';
 
 interface AuthUser {
+id: number;
   username: string;
   role: 'ADMIN' | 'STUDENT';
 }
@@ -51,9 +52,10 @@ export function AuthProvider({
     localStorage.setItem(TOKEN_KEY, data.token);
 
     const authUser: AuthUser = {
-      username: data.username,
-      role: data.role,
-    };
+  id: data.userId,
+  username: data.username,
+  role: data.role,
+};
 
     localStorage.setItem(
       USER_KEY,
