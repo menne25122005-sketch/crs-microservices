@@ -13,3 +13,14 @@ export interface PagedResponse<T> {
   number: number; // trang hiện tại, bắt đầu từ 0
   size: number;
 }
+export interface CourseFormValues {
+  tenMonHoc: string;
+  soTinChi: string;
+  soChoToiDa: string;
+}
+
+export const emptyCourseForm: CourseFormValues = {
+  tenMonHoc: '',
+  soTinChi: '',
+  soChoToiDa: '',
+};
