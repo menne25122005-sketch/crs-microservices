@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +21,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex, WebRequest request) {
         return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage(), request);
     }
+@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+public ResponseEntity<Map<String, Object>> handleMethodNotSupported(
+        HttpRequestMethodNotSupportedException ex,
+        WebRequest request
+) {
+    return buildResponse(
+            HttpStatus.METHOD_NOT_ALLOWED,
+            ex.getMessage(),
+            request
+    );
+}
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex, WebRequest request) {
