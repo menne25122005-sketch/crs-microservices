@@ -50,8 +50,10 @@ import java.util.List;
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 } catch (Exception e) {
-                    SecurityContextHolder.clearContext();
-                }
+    SecurityContextHolder.clearContext();
+    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    return;
+}
             }
             filterChain.doFilter(request, response);
         }
