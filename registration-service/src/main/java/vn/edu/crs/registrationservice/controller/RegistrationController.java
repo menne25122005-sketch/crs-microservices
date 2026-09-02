@@ -5,8 +5,10 @@ import vn.edu.crs.registrationservice.entity.Registration;
 import vn.edu.crs.registrationservice.service.RegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 @RestController
 @RequestMapping("/registrations")
 @RequiredArgsConstructor
@@ -21,4 +23,13 @@ public class RegistrationController {
     public void cancel(@PathVariable Long id) {
         registrationService.cancel(id);
     }
+@GetMapping("/my")
+public List<Registration> getMyRegistrations(
+        Authentication authentication
+) {
+    Long studentId =
+            (Long) authentication.getCredentials();
+
+    return registrationService.getMyRegistrations(studentId);
+}
 }
