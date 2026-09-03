@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import CoursesPage from './pages/CoursesPage';
 import AdminCoursesPage from './pages/AdminCoursesPage';
+import ApiKeysPage from './pages/ApiKeysPage';
 import RegisterCoursePage from './pages/RegisterCoursePage';
 import MyRegistrationsPage from './pages/MyRegistrationsPage';
 
@@ -53,6 +54,15 @@ function App() {
           />
 
           <Route
+            path="/admin/api-keys"
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <ApiKeysPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/register-course"
             element={
               <ProtectedRoute requiredRole="STUDENT">
@@ -60,14 +70,15 @@ function App() {
               </ProtectedRoute>
             }
           />
-<Route
-  path="/my-registrations"
-  element={
-    <ProtectedRoute requiredRole="STUDENT">
-      <MyRegistrationsPage />
-    </ProtectedRoute>
-  }
-/>
+
+          <Route
+            path="/my-registrations"
+            element={
+              <ProtectedRoute requiredRole="STUDENT">
+                <MyRegistrationsPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

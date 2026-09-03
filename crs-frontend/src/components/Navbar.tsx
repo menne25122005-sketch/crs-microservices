@@ -2,6 +2,7 @@ import {
   Link,
   useNavigate,
 } from 'react-router-dom';
+
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
@@ -34,23 +35,29 @@ export default function Navbar() {
 
       {isAuthenticated &&
         user?.role === 'ADMIN' && (
-          <Link to="/admin/courses">
-            Quan tri mon hoc
-          </Link>
+          <>
+            <Link to="/admin/courses">
+              Quan tri mon hoc
+            </Link>
+
+            <Link to="/admin/api-keys">
+              API Keys
+            </Link>
+          </>
         )}
 
       {isAuthenticated &&
-  user?.role === 'STUDENT' && (
-    <>
-      <Link to="/register-course">
-        Dang ky hoc phan
-      </Link>
+        user?.role === 'STUDENT' && (
+          <>
+            <Link to="/register-course">
+              Dang ky hoc phan
+            </Link>
 
-      <Link to="/my-registrations">
-        Hoc phan cua toi
-      </Link>
-    </>
-  )}
+            <Link to="/my-registrations">
+              Hoc phan cua toi
+            </Link>
+          </>
+        )}
 
       <div style={{ marginLeft: 'auto' }}>
         {isAuthenticated ? (
